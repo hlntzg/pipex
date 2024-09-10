@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:49:42 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/10 10:16:24 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/10 11:38:53 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,8 @@ typedef struct s_name
 
 }
 */
+
+void	log_guide(void);
+void	log_error(char *str);
+
 #endif
