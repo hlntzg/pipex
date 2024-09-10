@@ -6,7 +6,7 @@
 #    By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/10 09:28:27 by hutzig            #+#    #+#              #
-#    Updated: 2024/09/10 09:48:32 by hutzig           ###   ########.fr        #
+#    Updated: 2024/09/10 11:36:41 by hutzig           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,11 @@ LIBFT_FLAGS = -L $(DIR_LIBFT) -lft
 RM = rm -rf
 
 SOURCES = main.c \
-
+	errors_handling.c \
 
 SRC = $(addprefix $(DIR_SRC)/,$(SOURCES))
 
-OBJECTS = $(patsubst $.c,$(DIR_OBJ)/%.o,$(notdir $(SOURCES)))
+OBJECTS = $(patsubst %.c,$(DIR_OBJ)/%.o,$(notdir $(SOURCES)))
 
 HEADERS = -I ./include -I $(DIR_LIBFT)
 
