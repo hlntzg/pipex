@@ -6,7 +6,7 @@
 #    By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/10 09:28:27 by hutzig            #+#    #+#              #
-#    Updated: 2024/09/10 11:36:41 by hutzig           ###   ########.fr        #
+#    Updated: 2024/09/19 12:25:10 by hutzig           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,6 @@ all: $(LIBFT) $(NAME)
 
 $(LIBFT):
 	@make -C $(DIR_LIBFT)
-	@echo "Libft generared!"
 
 $(NAME): $(OBJECTS)
 	@$(CC) $(OBJECTS) $(LIBFT_FLAGS) $(HEADERS) -o $@
