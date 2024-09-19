@@ -6,7 +6,7 @@
 #    By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/10 09:28:27 by hutzig            #+#    #+#              #
-#    Updated: 2024/09/19 12:25:10 by hutzig           ###   ########.fr        #
+#    Updated: 2024/09/19 15:57:57 by hutzig           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ RM = rm -rf
 
 SOURCES = main.c \
 	errors_handling.c \
+	init_pipex.c \
 
 SRC = $(addprefix $(DIR_SRC)/,$(SOURCES))
 

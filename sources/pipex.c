@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/10 10:17:04 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/19 18:41:32 by hutzig           ###   ########.fr       */
+/*   Created: 2024/09/19 17:39:02 by hutzig            #+#    #+#             */
+/*   Updated: 2024/09/19 18:19:16 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	main(int argc, char **argv, char **envp) // # envp: the environmental variable
+/* This function check the accessibility for reading (F_OK) and F_OK tests for
+ * the existence of the file. */
+void	access_infile(char *file)
 {
-	t_pipex	data;
-	int	status;
-
-	if (argc != 5)
-	{
-		log_error("Error: Incorrect number of arguments");
-		log_guide();
+	if (access(file, R_OK) == -1 && errno == EACCES)
+ 	{
+		// "Permission denied\n" ----- handle error
 		return (EXIT_FAILURE);
 	}
-	access_infile(argv[1]);
-	init_pipex_data(argc, argv, envp, &data);
-	status = pipex(&data);
-	return (status);
-	//return (EXIT_SUCCESS);
+	if (access(file, F_OK) == -1 && errno == ENOENT)
+	{
+		// "No such file file or directory\n" ---- handle error
+		return (EXIT_FAILURE);
+	}
+}
+
+int	pipex(t_pipex *data)
+{
+
+
 }
