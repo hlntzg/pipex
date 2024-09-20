@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:55:41 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/10 11:45:09 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/20 11:47:52 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	log_error(char *str)
 {
-	ft_putstr_fd("\033[0;31m", 1);
-	ft_putendl_fd(str, 2);
-	ft_putstr_fd("\033[0m", 1);
+	ft_putstr_fd("\033[0;31m", STDOUT);
+	ft_putendl_fd(str, STDERR);
+	ft_putstr_fd("\033[0m", STDOUT);
 }
 
 void	log_guide(void)

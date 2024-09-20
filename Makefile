@@ -6,7 +6,7 @@
 #    By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/10 09:28:27 by hutzig            #+#    #+#              #
-#    Updated: 2024/09/19 15:57:57 by hutzig           ###   ########.fr        #
+#    Updated: 2024/09/20 11:41:21 by hutzig           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ LIBFT_FLAGS = -L $(DIR_LIBFT) -lft
 RM = rm -rf
 
 SOURCES = main.c \
+	pipex.c \
 	errors_handling.c \
 	init_pipex.c \
 

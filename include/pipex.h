@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:49:42 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/19 15:57:33 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/20 11:51:34 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@
 # include <sys/wait.h>			/* waitpid, wait */
 # include <errno.h>			/* errno */
 # include <fcntl.h>			/* open */
+# include <sys/types.h>			/* pid_t data type */
 
-# define STDERR 2
-# define STDOUT 1
 # define STDIN 0
+# define STDOUT 1
+# define STDERR 2
 
 typedef struct s_pipex
 {
@@ -37,6 +38,7 @@ typedef struct s_pipex
 	int	*fd;
 	char	*infile; //check if it will be usefull
 	char	*outfile; // same as infile
+	int	cmds;
 }	t_pipex;
 
 
@@ -47,5 +49,8 @@ void	log_error(char *str);
 char	**get_path(t_pipex *data, char **envp);
 int	*get_pipe_fd(t_pipex *data);
 void	init_pipex_data(int argc, char **argv, char **envp, t_pipex *data);
+void	access_infile(char *file);
+int	pipex(t_pipex *data);
+void	close_fd(t_pipex *data);
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:17:04 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/19 18:41:32 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/20 11:39:44 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	main(int argc, char **argv, char **envp) // # envp: the environmental variable
+int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	data;
 	int	status;
@@ -26,6 +26,7 @@ int	main(int argc, char **argv, char **envp) // # envp: the environmental variab
 	access_infile(argv[1]);
 	init_pipex_data(argc, argv, envp, &data);
 	status = pipex(&data);
+//	free(&data);
 	return (status);
 	//return (EXIT_SUCCESS);
 }
