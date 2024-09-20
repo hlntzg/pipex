@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:49:42 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/20 11:51:34 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/20 15:51:58 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ typedef struct s_pipex
 	char	**envp;
 	char	**path;
 	int	*fd;
-	char	*infile; //check if it will be usefull
-	char	*outfile; // same as infile
+	int	infile; //check if it will be usefull
+	int	outfile; // same as infile
 	int	cmds;
 }	t_pipex;
 
