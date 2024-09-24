@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:39:02 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/23 15:14:55 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/24 17:32:13 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,28 +65,58 @@ int	get_exit_code(int status)
 	return (EXIT_SUCCESS);
 }
 
+
+/*
+int	execute_command(char *path, char *command, t_pipex *data)
+{
+	int	status;
+	char	**cmds;
+	char	*abs_path;
+	
+	cmds = NULL;
+	if (path)
+	{
+		cmds = ft_split(command, ' ');
+		if (!cmds)
+			// error
+		abs_path = get_abs_path(path, cmds[0]);
+	}
+	else
+		abs_path = ft_strdup(command);
+	if (!abs_path)
+	{
+		free_array;
+		// error
+	}
+	status = CMD_FAIL;
+	if (access(abs_path, F_OK) == 0)
+	{	
+		if (access(abs_path, X_OK) == 0)
+		{
+			if (execve(abs_path, cmds, data->envp) == 1)
+				status = CMD_SUCCESS;
+			else
+				status = CMD_EXEC_ERROR;
+		}
+	}
+	if (cmds)
+		free_array;
+	return (status);
+}
+
 void	execute_process(t_pipex *data, char *command)
 {
-	char	**cmd_args;
-	char	*cmd_path;
 	int	status;
 
 	if (command[0] == '\0' || !command)
 		// error
-	if (command[0] == '/' || command[0] == '.')
-	{
-		cmd_path = command;
-		status = execute_command();// Direct execution
-	}
+	if (command[0] == '/' || command[0] == '.' || ft_strchr(command, '/'))
+		status = execute_command("", command, data);
 	else
 	{
-		//cmd_path = get_abs_path(cmd_args[0], data->envp);
-		cmd_args = ft_split(command, ' ');
-		if (!cmd_args)
-			// error if Malloc fails
 		while (data->path && data->path[i])
 		{
-			status = execute_command();//execve(abs_cmd_path, cmd_args, data->envp);
+			status = execute_command(data->path[i], command, data);//execve(abs_cmd_path, cmd_args, data->envp);
 			if (status == CMD_SUCCESS || status == CMD_EXEC_ERROR)
 				break ;
 			i++;
@@ -96,6 +126,8 @@ void	execute_process(t_pipex *data, char *command)
 		// if fails, msg and exit the child process @ cmd_error(command, data); 
 	free_stuff // Free dynamically allocated memory (cmd_args) only if it was allocated
 }
+*/
+
 
 /* This function open the specific file, duplicate the file descriptors and 
  * close them before calling the execute_cmds(). */
