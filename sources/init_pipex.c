@@ -6,19 +6,19 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:54:15 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/25 11:38:53 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/25 16:34:43 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	**get_path(t_pipex *data, char **envp)
+static char	**get_path(t_pipex *data, char **envp)
 {
 	char	**path;
 	(void)data;
 
 	if (!(*envp))
-		return (NULL); // return some error ?
+		return (NULL); // return some error ? should exit?!
 	while (*envp != NULL && ft_strncmp(*envp, "PATH=", 5))
 		envp++;
 	path = ft_split((*envp) + 5, ':');
@@ -27,7 +27,7 @@ char	**get_path(t_pipex *data, char **envp)
 	return (path);
 }
 
-int	*get_pipe_fd(t_pipex *data)
+static int	*get_pipe_fd(t_pipex *data)
 {
 	int	*fd;
 	(void)data;
@@ -35,13 +35,13 @@ int	*get_pipe_fd(t_pipex *data)
 	fd = (int *)malloc(sizeof(int) * 2);
 	if (!fd)
 	{
-		log_error("Memory allocation failed in get_pipe_fd()");
+		perror("Memory allocation failed in get_pipe_fd()");
 		return (NULL); // check mallocs fails, return any error?
 	}
 	if (pipe(fd) == -1)
 	{
 		free(fd);
-		log_error("Error on pipe()::(get_pipe_fd())");
+		perror("Error on pipe()::(get_pipe_fd())");
 		return (NULL);
 	}
 	return (fd);
@@ -54,5 +54,4 @@ void	init_pipex_data(int argc, char **argv, char **envp, t_pipex *data)
 	data->envp = envp;
 	data->path = get_path(data, envp);
 	data->fd = get_pipe_fd(data);
-	//data->cmds = argc - 3;
 }

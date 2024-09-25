@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:17:04 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/20 11:39:44 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/25 16:21:29 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 5)
 	{
-		log_error("Error: Incorrect number of arguments");
-		log_guide();
+		log_error("follow the instructions", 1);
+		log_guide_instructions();
 		return (EXIT_FAILURE);
 	}
 	access_infile(argv[1]);
@@ -28,5 +28,4 @@ int	main(int argc, char **argv, char **envp)
 	status = pipex(&data);
 //	free(&data);
 	return (status);
-	//return (EXIT_SUCCESS);
 }

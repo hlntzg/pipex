@@ -6,16 +6,12 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:49:42 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/25 12:52:13 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/25 16:49:46 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
-
-
-# include <stdio.h>			///// PRINTF, REMOVE BEFORE SUBMISSION
-
 
 # include "../lib/libft/libft.h"	/* libft library */
 # include <unistd.h>			/* fork, pipe, r/w file, close, dup2, execve */
@@ -24,6 +20,7 @@
 # include <errno.h>			/* errno */
 # include <fcntl.h>			/* open */
 # include <sys/types.h>			/* pid_t data type */
+# include <stdio.h>			/* perror */
 
 # define STDIN 0
 # define STDOUT 1
@@ -46,15 +43,17 @@ typedef struct s_pipex
 }	t_pipex;
 
 
-void	log_guide(void);
-void	log_error(char *str);
+void	log_guide_instructions(void);
+void	log_error(char *msg, int i);
 
 
-char	**get_path(t_pipex *data, char **envp);
-int	*get_pipe_fd(t_pipex *data);
-void	init_pipex_data(int argc, char **argv, char **envp, t_pipex *data);
+void	open_file(t_pipex *data, int process);
 void	access_infile(char *file);
-int	pipex(t_pipex *data);
 void	close_fd(t_pipex *data);
+
+
+void	init_pipex_data(int argc, char **argv, char **envp, t_pipex *data);
+int	pipex(t_pipex *data);
+void	go_to_process(t_pipex *data, char *command);
 
 #endif
