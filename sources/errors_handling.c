@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:55:41 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/20 11:47:52 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/25 11:23:39 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	log_guide(void)
 		"\n\t./pipex [file1] [cmd1] [cmd2] [file2]\n"
 		"\n\tfile1, file2\t: file names, infile and outfile;"
 		"\n\tcmd1, cmd2\t: shell commands with respective parameters;"
-		"\n\n", 1);
+		"\n\n", STDERR);
 }

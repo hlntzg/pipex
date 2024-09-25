@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:49:42 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/23 11:37:03 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/25 12:52:13 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@
 # define STDOUT 1
 # define STDERR 2
 
+# define CMD_SUCCESS 1			/* Command executed successfully */
+# define CMD_FAIL 0			/* Command failed to execute (not found or invalid) */
+# define CMD_EXEC_ERROR -1		/* Error during command execution (execve failed) */
+
 typedef struct s_pipex
 {
 	int	ac;
@@ -39,7 +43,6 @@ typedef struct s_pipex
 	int	*fd;
 	int	infile;
 	int	outfile;
-//	int	cmds;
 }	t_pipex;
 
 

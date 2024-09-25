@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:54:15 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/23 11:34:54 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/25 11:38:53 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,15 @@ int	*get_pipe_fd(t_pipex *data)
 
 	fd = (int *)malloc(sizeof(int) * 2);
 	if (!fd)
+	{
+		log_error("Memory allocation failed in get_pipe_fd()");
 		return (NULL); // check mallocs fails, return any error?
+	}
 	if (pipe(fd) == -1)
 	{
 		free(fd);
 		log_error("Error on pipe()::(get_pipe_fd())");
+		return (NULL);
 	}
 	return (fd);
 }
