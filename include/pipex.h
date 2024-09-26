@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:49:42 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/25 16:49:46 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/26 18:18:04 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@
 # define CMD_FAIL 0			/* Command failed to execute (not found or invalid) */
 # define CMD_EXEC_ERROR -1		/* Error during command execution (execve failed) */
 
+# define SUCCESS 0
+# define FAILURE 1
+
+// Command-related exit codes
+# define EXIT_CMD_NOT_EXECUTABLE 126
+# define EXIT_CMD_NOT_FOUND 127
+
 typedef struct s_pipex
 {
 	int	ac;
@@ -42,17 +49,35 @@ typedef struct s_pipex
 	int	outfile;
 }	t_pipex;
 
+typedef enum s_fd
+{
+	PIPE,
+	FILES,
+	READ,
+	WRITE,
+}	t_fd;
+
+typedef enum s_error
+{
+	ARGUMENTS,
+	EXISTENCE,
+	PERMISSION,	
+	COMMAND,
+	MALLOC,
+	PIPE,
+}	t_error;
 
 void	log_guide_instructions(void);
-void	log_error(char *msg, int i);
+void	log_error(char *str, t_error type);
 
 
 void	open_file(t_pipex *data, int process);
-void	access_infile(char *file);
-void	close_fd(t_pipex *data);
+void	access_file(char *filename, t_fd mode);
+void	close_fd(t_pipex *data, t_fd fd);
 
+char	**get_path(char **envp);
 
-void	init_pipex_data(int argc, char **argv, char **envp, t_pipex *data);
+void	initialize_pipex(int argc, char **argv, char **envp, t_pipex *data);
 int	pipex(t_pipex *data);
 void	go_to_process(t_pipex *data, char *command);
 

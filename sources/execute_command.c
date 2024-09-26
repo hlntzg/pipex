@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:04:24 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/25 16:20:42 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/26 13:52:33 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,5 @@ void	go_to_process(t_pipex *data, char *command)
 		}
 	}
 	if (status == CMD_FAIL || status == CMD_EXEC_ERROR)
-		perror("\ncmd fail or exec with error"); // ERROR (msg and exit the child process @ cmd_error(command, data); 
+		log_error(command, COMMAND);
 }

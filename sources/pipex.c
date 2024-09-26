@@ -6,14 +6,14 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:39:02 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/25 16:53:09 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/26 10:39:25 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /* */
-static void	wait_children_processes(pid_t *pid, int *status)
+static void	wait_processes(pid_t *pid, int *status)
 {
 	int	i;
 
@@ -30,6 +30,14 @@ static int	get_exit_code(int status)
 	if (WIFSIGNALED(status) && WTERMSIG(status))
 		return (128 + WTERMSIG(status));
 	return (EXIT_SUCCESS);
+}
+
+void	exit_child_process(t_pipex *data)
+{
+	close_fd(data, FILES);
+	close_fd(data, PIPE);
+	// free_array(data);
+	exit(EXIT_SUCCESS);
 }
 
 /* This function open the specific file, duplicate the file descriptors and 
@@ -56,14 +64,12 @@ static void	child_process(t_pipex *data, int process)
 		close(data->fd[0]);
 		close(data->outfile);
 	}
-	close_fd(data);
+	close_fd(data, PIPE);
 	go_to_process(data, data->av[process + 2]);
-	if (data->infile > -1)
-		close(data->infile);
-	if (data->outfile > -1)
-		close(data->outfile);
-	close_fd(data);
-	exit(EXIT_SUCCESS);
+	exit_child_process(data);
+//	close_fd(data, FILES);
+//	close_fd(data, PIPE);
+//	exit(EXIT_SUCCESS);
 }
 
 /* */
@@ -88,7 +94,7 @@ int	pipex(t_pipex *data)
 			child_process(data, i);
 		i++;
 	}
-	close_fd(data);
-	wait_children_processes(pid, &status);
+	close_fd(data, PIPE);
+	wait_processes(pid, &status);
 	return (get_exit_code(status));
 }

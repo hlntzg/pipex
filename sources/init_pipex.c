@@ -6,26 +6,37 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:54:15 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/25 16:34:43 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/26 18:17:38 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char	**get_path(t_pipex *data, char **envp)
+char	**get_path(char **envp)
 {
 	char	**path;
-	(void)data;
 
-	if (!(*envp))
-		return (NULL); // return some error ? should exit?!
+	if (!envp || !*envp)
+	{
+		ft_putstr_fd("pipex: envp is invalid or empty\n", STDERR);
+		return (NULL);
+	}
 	while (*envp != NULL && ft_strncmp(*envp, "PATH=", 5))
 		envp++;
-	path = ft_split((*envp) + 5, ':');
+	if (!(*envp))
+	{
+		ft_putstr_fd("pipex: PATH environment variable not found\n", STDERR);
+		path = ft_split("", 0);
+	}
+	else
+		path = ft_split((*envp) + 5, ':');
 	if (!path)
-		return (NULL); // check malloc fails, any other error?
+	{
+		perror("pipex: gat_path(): memory allocation failed\n");
+		return (NULL);
+	}
 	return (path);
-}
+}	
 
 static int	*get_pipe_fd(t_pipex *data)
 {
@@ -35,23 +46,26 @@ static int	*get_pipe_fd(t_pipex *data)
 	fd = (int *)malloc(sizeof(int) * 2);
 	if (!fd)
 	{
-		perror("Memory allocation failed in get_pipe_fd()");
-		return (NULL); // check mallocs fails, return any error?
+		log_error("get_pipe_fd()", MALLOC);
+		release_resources_and_exit(data, FAILURE);
+		//perror("Memory allocation failed in get_pipe_fd()");
+		//return (NULL); // check mallocs fails, return any error?
 	}
 	if (pipe(fd) == -1)
 	{
 		free(fd);
-		perror("Error on pipe()::(get_pipe_fd())");
-		return (NULL);
+		log_error(NULL, PIPE);
+		release_resources_and_exit(data, FAILURE);
+		//perror("Error on pipe()::(get_pipe_fd())");
+		//return (NULL);
 	}
 	return (fd);
 }
 
-void	init_pipex_data(int argc, char **argv, char **envp, t_pipex *data)
+void	initialize_pipex(int argc, char **argv, char **envp, t_pipex *data)
 {
 	data->ac = argc;
 	data->av = argv;
 	data->envp = envp;
-	data->path = get_path(data, envp);
 	data->fd = get_pipe_fd(data);
 }
