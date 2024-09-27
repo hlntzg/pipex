@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:11:28 by hutzig            #+#    #+#             */
-/*   Updated: 2024/08/31 18:02:05 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/27 14:05:21 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int		ft_isascii(int c);
 int		ft_isprint(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
+int		ft__iswhitespace(int c);
 
 /* Libft - string processing */
 

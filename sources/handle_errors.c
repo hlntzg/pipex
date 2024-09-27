@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:55:41 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/26 18:15:01 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/27 16:08:07 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,48 @@ void	log_error(char *str, t_error type)
 		ft_putstr_fd(str, STDERR);
 	if (type == ARGUMENTS)
 		ft_putstr_fd(": Incorrect number of arguments", STDERR);
+	if (type == ENVP)
+		ft_putstr_fd(": envp is invalid or empty", STDERR);
+	if (type == PATH)
+		ft_putstr_fd(": PATH environment variable not found", STDERR);	
+	if (type == MALLOC)
+		ft_putstr_fd(": memory allocation failed", STDERR);
 	if (type == EXISTENCE)
 		ft_putstr_fd(": No such file or directory", STDERR);
 	if (type == PERMISSION)
 		ft_putstr_fd(": Permission denied", STDERR);
 	if (type == COMMAND)
 		ft_putstr_fd(": command not found", STDERR);
-	if (type == MALLOC)
-		ft_putstr_fd(": memory allocation failed", STDERR);
+	if (type == DIRECTORY)
+		ft_putstr_fd(": Is a directory", STDERR);
+	if (type == PIPE) //errno
+		ft_putstr_fd(": pipe() failed on gert_pipe_fd()", STDERR); 
+	if (type == FORK) //errno
+		ft_putstr_fd(": fork() failed on pipex()", STDERR);
+	if (type == DUP2)  //errno
+		ft_putstr_fd(": dup2() failed on child_process()", STDERR);
 	ft_putstr_fd("\n", STDERR);
-	exit(1);
+}
+
+void	free_char_double_pointer(char **ptr)
+{
+	int	i;
+
+	if (ptr == NULL)
+		return ;
+	i = 0;
+	while (ptr[i] != NULL)
+	{
+		ptr[i];
+		i++;
+	}
+	free(ptr);
 }
 
 void	release_resources_and_exit(t_pipex *data, int code)
 {
-	freeeeeee
+	close_fd(data, PIPE);
+	close_fd(data, FILES);
+	free_char_double_pointer(data-path);
 	exit(code);
 }

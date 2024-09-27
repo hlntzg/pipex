@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:39:02 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/26 10:39:25 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/27 11:45:10 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,6 @@ static int	get_exit_code(int status)
 	return (EXIT_SUCCESS);
 }
 
-void	exit_child_process(t_pipex *data)
-{
-	close_fd(data, FILES);
-	close_fd(data, PIPE);
-	// free_array(data);
-	exit(EXIT_SUCCESS);
-}
-
 /* This function open the specific file, duplicate the file descriptors and 
  * close them before calling the execute_cmds(). */
 static void	child_process(t_pipex *data, int process)
@@ -48,9 +40,15 @@ static void	child_process(t_pipex *data, int process)
 	{
 		open_file(data, process);
 		if (dup2(data->infile, STDIN) == -1)
-			perror("\ndup2 infile"); // ERROR
+		{
+			log_error("read infile", DUP2);
+			release_resources_and_exit(data, FAILURE);
+		}
 		if (dup2(data->fd[1], STDOUT) == -1)
-			perror("\ndup2 pipe write"); // ERROR
+		{
+			log_error("pipe write", DUP2);
+			release_resources_and_exit(data, FAILURE);
+		}
 		close(data->infile);
 		close(data->fd[1]);
 	}
@@ -58,18 +56,21 @@ static void	child_process(t_pipex *data, int process)
 	{
 		open_file(data, process);
 		if (dup2(data->fd[0], STDIN) == -1)
-			perror("\ndup2 pipe read"); // ERROR
+		{
+			log_error("pipe read", DUP2);
+			release_resources_and_exit(data, FAILURE);
+		}
 		if (dup2(data->outfile, STDOUT) == -1)
-			perror("\ndup2 outfile"); // ERROR
+		{
+			log_error("write outfile", DUP2);
+			release_resources_and_exit(data, FAILURE);
+		}
 		close(data->fd[0]);
 		close(data->outfile);
 	}
 	close_fd(data, PIPE);
 	go_to_process(data, data->av[process + 2]);
-	exit_child_process(data);
-//	close_fd(data, FILES);
-//	close_fd(data, PIPE);
-//	exit(EXIT_SUCCESS);
+	release_resources_and_exit(data, SUCCESS);
 }
 
 /* */
@@ -85,10 +86,8 @@ int	pipex(t_pipex *data)
 		pid[i] = fork();
 		if (pid[i] == -1)
 		{
-			ft_putstr_fd("fork failed", STDERR);
-			ft_putstr_fd(":\t", STDERR);
-			ft_putstr_fd(strerror(errno), STDERR); 
-			exit(EXIT_FAILURE); // exit the program? 
+			log_error(NULL, FORK);
+			release_resources_and_exit(data, FAILURE);
 		}
 		if (pid[i] == 0)
 			child_process(data, i);

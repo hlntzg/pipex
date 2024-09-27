@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:49:42 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/26 18:18:04 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/27 16:08:54 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,16 @@ typedef enum s_fd
 typedef enum s_error
 {
 	ARGUMENTS,
+	ENVP,
+	PATH,
+	MALLOC,
 	EXISTENCE,
 	PERMISSION,	
 	COMMAND,
-	MALLOC,
+	DIRECTORY,
 	PIPE,
+	FORK,
+	DUP2,
 }	t_error;
 
 void	log_guide_instructions(void);

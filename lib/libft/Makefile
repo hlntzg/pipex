@@ -6,7 +6,7 @@
 #    By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/23 16:51:18 by hutzig            #+#    #+#              #
-#    Updated: 2024/08/30 18:22:49 by hutzig           ###   ########.fr        #
+#    Updated: 2024/09/27 14:05:49 by hutzig           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SOURCES = ft_atoi.c \
 	ft_isascii.c \
 	ft_isdigit.c \
 	ft_isprint.c \
+	ft_iswhitespace.c \
 	ft_itoa.c \
 	ft_max.c \
 	ft_memchr.c \

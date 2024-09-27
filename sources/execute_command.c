@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:04:24 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/26 13:52:33 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/27 19:00:33 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,12 @@ int	execute_command(char *path, char *command, t_pipex *data)
 	if (!cmd_args)
 	{
 		//error 
-		return (CMD_FAIL);
 	}
 	abs_path = get_abs_path(path, cmd_args[0]);
 	if (!abs_path)
 	{
 		//free_array(cmd_args);
 		//error;
-		return (CMD_FAIL);
 	}
 	if (access(abs_path, F_OK) == 0)
 	{
@@ -69,14 +67,32 @@ int	execute_command(char *path, char *command, t_pipex *data)
 	return (status);
 }
 
+int	invalid_cmd_arg(char *cmd)
+{
+	int	i;
+
+	if (!cmd || cmd[0] == '\0')
+		return (1);
+	i = 0;
+	while (cmd[i])
+	{	
+		if (ft_isprint(cmd[i]) && !ft_iswhitespace(cmd[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}	
+
 void	go_to_process(t_pipex *data, char *command)
 {
 	int	status;
 	int	i;
 
-	if (command[0] == '\0' || !command)
-		// error
-	status = CMD_FAIL;
+	if (invalid_cmd_arg(command))
+	{
+		log_error(command, COMMAND);
+		release_resources_and_exit(data, FAILURE);
+	}
 	if (command[0] == '/' || command[0] == '.' || ft_strchr(command, '/'))
 		status = execute_command("", command, data);
 	else
@@ -91,5 +107,29 @@ void	go_to_process(t_pipex *data, char *command)
 		}
 	}
 	if (status == CMD_FAIL || status == CMD_EXEC_ERROR)
-		log_error(command, COMMAND);
+		cmd_error(data, command);
+}
+
+void	cmd_errors(t_pipex *data, char *cmd)
+{
+	if (access(cmd, F_OK) == -1)
+	{
+		log_error(cmd, EXISTENCE);
+		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
+	}
+	if (access(cmd, X_OK) == -1)
+	{
+		if (*cmd == '/')
+			log_error(cmd, PERMISSION);	// permission denied for absolute path
+		else //if (!ft_strchr(cmd, '/'))
+			log_error(cmd, COMMAND);	// command not found in path
+		release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
+	}
+	if (ft_strchr(cmd, '/'))
+	{
+		log_error(cmd, DIRECTORY);		// attempting to execute a directory
+		release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
+	}
+	log_error(cmd, COMMAND);			// command found but not executable
+	release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
 }
