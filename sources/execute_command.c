@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:04:24 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/30 11:17:31 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/30 14:27:36 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	go_to_process(t_pipex *data, char *command)
 
 	if (invalid_cmd_arg(command))
 	{
-		log_error(command, COMMAND);
+		log_error(command, COMMAND); // test 14, 15, 16
 		release_resources_and_exit(data, FAILURE);
 	}
 	if (command[0] == '/' || command[0] == '.' || ft_strchr(command, '/'))
@@ -112,37 +112,46 @@ void	cmd_errors(t_pipex *data, char *cmd)
 {
 	if (access(cmd, F_OK) == -1) // check for the existence of the file
 	{
-		if (*cmd == '/')
+		// IS FOLDER (7, 8
+		// INVALID CMD (PATH) (10, 12, 13
+		if (ft_strchr(cmd, '/'))
 		{
-			log_error(cmd, EXISTENCE);
+			log_error("A", EXISTENCE); 
 			release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
 		}
+		// INVALID CMD (9, 11, 13
+		/////// wrong (19) PATH ENVP DOES NOT EXIST 	should be "no such file or directory"
+		/////// wrong (20) NO PATH ENVP, CMD1 (PATH) 	should be "no such file or directory"
 		else
 		{
-			log_error(cmd, COMMAND);
+			log_error("B", COMMAND);
 			release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
 		}
 	}
-	if (access(cmd, X_OK) == -1) // check the executability of the file
+	if (access(cmd, X_OK) == -1 && *cmd == '/')
 	{
-		if (ft_strchr(cmd, '/') != NULL)
-		{
-			log_error(cmd, DIRECTORY);
-			release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
-		}
-		else
-		{
-			log_error(cmd, PERMISSION);
-			release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
-		}
-	}
-	// If the file exists and is executable
-	if (ft_strchr(cmd, '/') != NULL) // ... but contains '/', it might be a directory
-	{
-		log_error(cmd, DIRECTORY);
+		log_error("C", EXISTENCE);
 		release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
 	}
-	// If all other checks pass, assume it's a command not found error
-	log_error(cmd, COMMAND);
-	release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
+	if (access(cmd, X_OK) == -1 && ft_strchr(cmd, '/') == NULL)
+	{
+		log_error("D", COMMAND);
+		release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
+	}
+	if (access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0)
+	{
+		if (ft_strchr(cmd, '/'))
+		{
+			log_error("E", DIRECTORY);
+			release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
+		}
+		else
+		{
+			log_error("D", COMMAND);
+			release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
+		}
+	}
+	// NO EXEC PERMISSION (5, 6)
+	log_error("E", PERMISSION);
+	release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
 }

@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:55:41 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/30 11:34:57 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/30 13:26:39 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,28 +27,27 @@ void	log_error(char *str, t_error type)
 	if (str)
 		ft_putstr_fd(str, STDERR);
 	if (type == ARGUMENTS)
-		ft_putstr_fd(": Incorrect number of arguments", STDERR);
+		ft_putstr_fd(": Incorrect number of arguments\n", STDERR);
 	if (type == ENVP)
-		ft_putstr_fd(": envp is invalid or empty", STDERR);
+		ft_putstr_fd(": envp is invalid or empty\n", STDERR);
 	if (type == PATH)
-		ft_putstr_fd(": PATH environment variable not found", STDERR);	
+		ft_putstr_fd(": PATH environment variable not found\n", STDERR);	
 	if (type == MALLOC)
-		ft_putstr_fd(": memory allocation failed", STDERR);
+		ft_putstr_fd(": memory allocation failed\n", STDERR);
 	if (type == EXISTENCE)
-		ft_putstr_fd(": No such file or directory", STDERR);
+		ft_putstr_fd(": No such file or directory\n", STDERR);
 	if (type == PERMISSION)
-		ft_putstr_fd(": Permission denied", STDERR);
+		ft_putstr_fd(": Permission denied\n", STDERR);
 	if (type == COMMAND)
-		ft_putstr_fd(": command not found", STDERR);
+		ft_putstr_fd(": command not found\n", STDERR);
 	if (type == DIRECTORY)
-		ft_putstr_fd(": Is a directory", STDERR);
+		ft_putstr_fd(": Is a directory\n", STDERR);
 	if (type == PIPE) //errno
-		ft_putstr_fd(": pipe() failed on get_pipe_fd()", STDERR); 
+		ft_putstr_fd(": pipe() failed on get_pipe_fd()\n", STDERR); 
 	if (type == FORK) //errno
-		ft_putstr_fd(": fork() failed on pipex()", STDERR);
+		ft_putstr_fd(": fork() failed on pipex()\n", STDERR);
 	if (type == DUP2)  //errno
-		ft_putstr_fd(": dup2() failed on child_process()", STDERR);
-	ft_putstr_fd("\n", STDERR);
+		ft_putstr_fd(": dup2() failed on child_process()\n", STDERR);
 }
 
 void	release_resources_and_exit(t_pipex *data, int code)

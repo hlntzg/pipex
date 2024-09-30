@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:39:02 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/30 11:35:31 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/30 13:21:12 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ static int	get_exit_code(int status)
 {
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
-	if (WIFSIGNALED(status) && WTERMSIG(status))
-		return (128 + WTERMSIG(status));
-	return (EXIT_SUCCESS);
+//	if (WIFSIGNALED(status) && WTERMSIG(status))
+//		return (128 + WTERMSIG(status));
+	return (FAILURE);
 }
 
 /* This function open the specific file, duplicate the file descriptors and 

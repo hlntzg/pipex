@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:39:33 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/30 11:39:45 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/30 13:09:43 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,28 @@
 
 /* This function checks if the file exits (F_OK) and, for READ mode, it checks
  * if it is readable (R_OK) or for WRITE mode, if it is writable (W_OK). */
-void	access_file(char *filename, t_fd mode)
+void	access_file(t_pipex *data, char *filename, int process)
 {
-	if (mode == READ)
+	if (process == 0)
 	{
 		if (access(filename, F_OK) == -1)
+		{
 			log_error(filename, EXISTENCE);
+			release_resources_and_exit(data, FAILURE);				
+		}
 		else if (access(filename, R_OK) == -1)
+		{
 			log_error(filename, PERMISSION);
+			release_resources_and_exit(data, FAILURE);
+		}	
 	}
-	if (mode == WRITE)
+	else
 	{
 		if (access(filename, F_OK) == 0 && access(filename, W_OK) == -1)
+		{
 			log_error(filename, PERMISSION);
+			release_resources_and_exit(data, FAILURE);
+		}
 	}
 }
 
@@ -34,29 +43,40 @@ void	access_file(char *filename, t_fd mode)
  * (write-only or, if doesn't exist, created it with permissions 0644). */
 void	open_file(t_pipex *data, int process)
 {
-	char	*filename;
-		
 	if (process == 0)
 	{
-		filename = data->av[1];
-//		access_file(filename, READ);
-		if (access(filename, F_OK) == -1)
-			log_error(filename, EXISTENCE);
-		else if (access(filename, R_OK) == -1)
-			log_error(filename, PERMISSION);
-		data->infile = open(filename, O_RDONLY);
-	//	if (data->infile == -1)
-	//		error for open()?			
+		access_file(data, data->av[1], process);
+/*		if (access(data->av[1], F_OK) == -1)
+		{
+			log_error(data->av[1], EXISTENCE);
+			release_resources_and_exit(data, FAILURE);				
+		}
+		else if (access(data->av[1], R_OK) == -1)
+		{
+			log_error(data->av[1], PERMISSION);
+			release_resources_and_exit(data, FAILURE);
+		}*/
+		data->infile = open(data->av[1], O_RDONLY);
+		if (data->infile == -1)
+		{
+			log_error(data->av[1], EXISTENCE);
+			release_resources_and_exit(data, FAILURE);
+		}
 	}
 	else
 	{
-		filename = data->av[4];
-//		access_file(filename, WRITE);
-		if (access(filename, F_OK) == 0 && access(filename, W_OK) == -1)
-			log_error(filename, PERMISSION);
-		data->outfile = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	//	if (data->outfile == -1)
-	//		error for open()?
+		access_file(data, data->av[4], process);
+		/*if (access(data->av[4], F_OK) == 0 && access(data->av[4], W_OK) == -1)
+		{
+			log_error(data->av[4], PERMISSION);
+			release_resources_and_exit(data, FAILURE);		
+		}*/
+		data->outfile = open(data->av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (data->outfile == -1)
+		{
+			log_error(data->av[4], EXISTENCE);
+			release_resources_and_exit(data, FAILURE);
+		}
 	}
 }
 

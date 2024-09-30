@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:49:42 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/30 11:36:09 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/30 13:10:52 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,6 @@ typedef struct s_pipex
 	int	outfile;
 }	t_pipex;
 
-typedef enum s_fd
-{
-	READ,
-	WRITE,
-}	t_fd;
-
 typedef enum s_error
 {
 	ARGUMENTS,
@@ -68,6 +62,7 @@ typedef enum s_error
 	PIPE,
 	FORK,
 	DUP2,
+	READF,
 }	t_error;
 
 void	log_guide_instructions(void);
@@ -75,8 +70,8 @@ void	log_error(char *str, t_error type);
 void	cmd_errors(t_pipex *data, char *cmd);
 void	release_resources_and_exit(t_pipex *data, int exit_status);
 
+void	access_file(t_pipex *data, char *filename, int process);
 void	open_file(t_pipex *data, int process);
-void	access_file(char *filename, t_fd mode);
 void	close_fd(t_pipex *data);
 void	close_files(t_pipex *data);
 
