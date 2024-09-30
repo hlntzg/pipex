@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_iswhitespace.c                                  :+:      :+:    :+:   */
+/*   free_char_double_pointer.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/27 13:59:33 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/30 10:57:55 by hutzig           ###   ########.fr       */
+/*   Created: 2024/09/30 11:05:10 by hutzig            #+#    #+#             */
+/*   Updated: 2024/09/30 11:06:06 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_iswhitespace(int c)
+void	free_char_double_pointer(char **ptr)
 {
-	if (c == 32 || (c >= 9 && c <= 13))
-		return (1);
-	return (0);
+	int	i;
+
+	if (ptr == NULL)
+		return ;
+	i = 0;
+	while (ptr[i] != NULL)
+	{
+		free(ptr[i]);
+		i++;
+	}
+	free(ptr);
 }

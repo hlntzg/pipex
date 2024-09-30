@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:54:15 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/27 11:10:43 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/30 10:58:29 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**get_path(char **envp)
 		path = ft_split((*envp) + 5, ':');
 	if (!path)
 	{
-		log_error("ft_split on get_path()", MALLOC);
+		log_error("ft_split() on get_path()", MALLOC);
 		return (NULL);
 	}
 	return (path);

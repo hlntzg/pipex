@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:39:02 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/27 11:45:10 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/09/30 11:35:31 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	child_process(t_pipex *data, int process)
 		close(data->fd[0]);
 		close(data->outfile);
 	}
-	close_fd(data, PIPE);
+	close_fd(data);
 	go_to_process(data, data->av[process + 2]);
 	release_resources_and_exit(data, SUCCESS);
 }
@@ -93,7 +93,7 @@ int	pipex(t_pipex *data)
 			child_process(data, i);
 		i++;
 	}
-	close_fd(data, PIPE);
+	close_fd(data);
 	wait_processes(pid, &status);
 	return (get_exit_code(status));
 }

@@ -6,7 +6,7 @@
 #    By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/23 16:51:18 by hutzig            #+#    #+#              #
-#    Updated: 2024/09/27 14:05:49 by hutzig           ###   ########.fr        #
+#    Updated: 2024/09/30 11:07:31 by hutzig           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SOURCES = ft_atoi.c \
 	ft_isprint.c \
 	ft_iswhitespace.c \
 	ft_itoa.c \
+	free_char_double_pointer.c \
 	ft_max.c \
 	ft_memchr.c \
 	ft_memcmp.c \
