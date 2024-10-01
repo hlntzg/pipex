@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:39:33 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/01 12:11:16 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/01 17:04:35 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	access_file(t_pipex *data, char *filename, int process)
 		if (access(filename, F_OK) == -1)
 		{
 			log_error(filename, EXISTENCE);
-			release_resources_and_exit(data, EXIT_FAILURE);				
+			release_resources_and_exit(data, EXIT_FAILURE);
 		}
 		else if (access(filename, R_OK) == -1)
 		{
@@ -46,16 +46,6 @@ void	open_file(t_pipex *data, int process)
 	if (process == 0)
 	{
 		access_file(data, data->av[1], process);
-/*		if (access(data->av[1], F_OK) == -1)
-		{
-			log_error(data->av[1], EXISTENCE);
-			release_resources_and_exit(data, FAILURE);				
-		}
-		else if (access(data->av[1], R_OK) == -1)
-		{
-			log_error(data->av[1], PERMISSION);
-			release_resources_and_exit(data, FAILURE);
-		}*/
 		data->infile = open(data->av[1], O_RDONLY);
 		if (data->infile == -1)
 		{
@@ -66,11 +56,6 @@ void	open_file(t_pipex *data, int process)
 	else
 	{
 		access_file(data, data->av[4], process);
-		/*if (access(data->av[4], F_OK) == 0 && access(data->av[4], W_OK) == -1)
-		{
-			log_error(data->av[4], PERMISSION);
-			release_resources_and_exit(data, FAILURE);		
-		}*/
 		data->outfile = open(data->av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (data->outfile == -1)
 		{
@@ -80,9 +65,8 @@ void	open_file(t_pipex *data, int process)
 	}
 }
 
-/* For PIPE - it closes the read and write ends of the pipe (data->fd) and frees
- * the allocated memory. Sets data->fd to NULL to prevent dangling pointers. 
- * For FILES - it closes the open files. */
+/* This function closes the read and write ends of the pipe (data->fd) and frees
+ * the allocated memory. Sets data->fd to NULL to prevent dangling pointers. */
 void	close_fd(t_pipex *data)
 {
 	if (!data->fd)

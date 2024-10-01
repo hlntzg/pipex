@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:54:15 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/01 12:31:11 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/01 16:53:32 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,4 @@ void	initialize_pipex(int argc, char **argv, char **envp, t_pipex *data)
 	data->envp = envp;
 	data->path = get_path(envp);
 	data->fd = get_pipe_fd(data);
-	
 }

@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:55:41 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/01 11:22:26 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/01 16:50:44 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	log_error(char *str, t_error type)
 	if (type == ENVP)
 		ft_putstr_fd(": envp is invalid or empty\n", STDERR);
 	if (type == PATH)
-		ft_putstr_fd(": PATH environment variable not found\n", STDERR);	
+		ft_putstr_fd(": PATH environment variable not found\n", STDERR);
 	if (type == MALLOC)
 		ft_putstr_fd(": memory allocation failed\n", STDERR);
 	if (type == EXISTENCE)
@@ -42,11 +42,11 @@ void	log_error(char *str, t_error type)
 		ft_putstr_fd(": command not found\n", STDERR);
 	if (type == DIRECTORY)
 		ft_putstr_fd(": Is a directory\n", STDERR);
-	if (type == PIPE) //errno
-		ft_putstr_fd(": pipe() failed on get_pipe_fd()\n", STDERR); 
-	if (type == FORK) //errno
+	if (type == PIPE)
+		ft_putstr_fd(": pipe() failed on get_pipe_fd()\n", STDERR);
+	if (type == FORK)
 		ft_putstr_fd(": fork() failed on pipex()\n", STDERR);
-	if (type == DUP2)  //errno
+	if (type == DUP2)
 		ft_putstr_fd(": dup2() failed on child_process()\n", STDERR);
 }
 

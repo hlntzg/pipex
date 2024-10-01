@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:17:04 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/01 11:19:29 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/01 16:52:52 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	data;
-	int	status;
+	int		status;
 
 	if (argc != 5)
 	{

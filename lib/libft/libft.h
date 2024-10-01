@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:11:28 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/30 11:06:45 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/01 17:27:10 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 
 int		ft_max(int a, int b);
 void	free_char_double_pointer(char **ptr);
-
 
 /* Libft - bonus part */
 

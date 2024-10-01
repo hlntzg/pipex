@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:49:42 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/01 14:04:04 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/01 17:26:09 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,25 @@
 # define STDOUT 1
 # define STDERR 2
 
-# define CMD_SUCCESS 1			/* Command executed successfully */
-# define CMD_FAIL 0			/* Command failed to execute (not found or invalid) */
-# define CMD_EXEC_ERROR -1		/* Error during command execution (execve failed) */
+# define CMD_SUCCESS 1		/* Command executed successfully */
+# define CMD_FAIL 0		/* Command failed to execute (not found or invalid) */
+# define CMD_EXEC_ERROR -1	/* Error during command execution (execve failed) */
 
-// general exit codes
-# define SUCCESS 0
-# define FAILURE 1
-
-// Command-related exit codes
+/* Command-related exit codes */
 # define EXIT_CMD_NOT_EXECUTABLE 126
 # define EXIT_CMD_NOT_FOUND 127
 
 typedef struct s_pipex
 {
-	int	ac;
+	int		ac;
 	char	**av;
 	char	**envp;
 	char	**path;
 	char	**cmd;
-	int	*fd;
-	int	infile;
-	int	outfile;
-	int	status;
+	int		*fd;
+	int		infile;
+	int		outfile;
+	int		status;
 }	t_pipex;
 
 typedef enum s_error
@@ -78,10 +74,8 @@ void	open_file(t_pipex *data, int process);
 void	close_fd(t_pipex *data);
 void	close_file(t_pipex *data);
 
-char	**get_path(char **envp);
-
 void	initialize_pipex(int argc, char **argv, char **envp, t_pipex *data);
-int	pipex(t_pipex *data);
+int		pipex(t_pipex *data);
 void	go_to_process(t_pipex *data, char *command);
 
 #endif

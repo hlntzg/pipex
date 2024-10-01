@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:39:02 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/01 12:15:00 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/01 17:01:17 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,6 @@ static int	wait_processes(pid_t *pid)
 		return (128 + WTERMSIG(status));
 	return (EXIT_FAILURE);
 }
-
-/*
-static int	get_exit_code(int status)
-{
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-//	if (WIFSIGNALED(status) && WTERMSIG(status))
-//		return (128 + WTERMSIG(status));
-	return (FAILURE);
-}*/
 
 /* This function open the specific file, duplicate the file descriptors and 
  * close them before calling the execute_cmds(). */
@@ -83,8 +73,8 @@ static void	child_process(t_pipex *data, int process)
 int	pipex(t_pipex *data)
 {
 	pid_t	pid[2];
-	int	i;
-	
+	int		i;
+
 	i = 0;
 	while (i < 2)
 	{
@@ -100,6 +90,5 @@ int	pipex(t_pipex *data)
 	}
 	close_fd(data);
 	data->status = wait_processes(pid);
-	//return (get_exit_code(status));
 	return (data->status);
 }
