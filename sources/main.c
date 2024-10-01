@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:17:04 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/30 14:25:26 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/01 11:19:29 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,8 @@ int	main(int argc, char **argv, char **envp)
 		log_guide_instructions();
 		return (EXIT_FAILURE);
 	}
-	data.path = get_path(envp);
-//	if (!data.path)
-//		return (EXIT_FAILURE);
 	initialize_pipex(argc, argv, envp, &data);
 	status = pipex(&data);
-//	free(&data);
+	close_and_free(&data);
 	return (status);
 }

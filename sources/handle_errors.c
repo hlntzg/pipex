@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:55:41 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/30 13:26:39 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/01 11:22:26 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,14 @@ void	log_error(char *str, t_error type)
 void	release_resources_and_exit(t_pipex *data, int code)
 {
 	close_fd(data);
-	close_fd(data);
+	close_file(data);
 	free_char_double_pointer(data->path);
 	exit(code);
+}
+
+void	close_and_free(t_pipex *data)
+{
+	close_file(data);
+	close_fd(data);
+	free_char_double_pointer(data->path);
 }

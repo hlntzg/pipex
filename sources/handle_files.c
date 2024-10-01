@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:39:33 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/30 13:09:43 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/01 12:11:16 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void	access_file(t_pipex *data, char *filename, int process)
 		if (access(filename, F_OK) == -1)
 		{
 			log_error(filename, EXISTENCE);
-			release_resources_and_exit(data, FAILURE);				
+			release_resources_and_exit(data, EXIT_FAILURE);				
 		}
 		else if (access(filename, R_OK) == -1)
 		{
 			log_error(filename, PERMISSION);
-			release_resources_and_exit(data, FAILURE);
+			release_resources_and_exit(data, EXIT_FAILURE);
 		}	
 	}
 	else
@@ -34,7 +34,7 @@ void	access_file(t_pipex *data, char *filename, int process)
 		if (access(filename, F_OK) == 0 && access(filename, W_OK) == -1)
 		{
 			log_error(filename, PERMISSION);
-			release_resources_and_exit(data, FAILURE);
+			release_resources_and_exit(data, EXIT_FAILURE);
 		}
 	}
 }
@@ -60,7 +60,7 @@ void	open_file(t_pipex *data, int process)
 		if (data->infile == -1)
 		{
 			log_error(data->av[1], EXISTENCE);
-			release_resources_and_exit(data, FAILURE);
+			release_resources_and_exit(data, EXIT_FAILURE);
 		}
 	}
 	else
@@ -75,7 +75,7 @@ void	open_file(t_pipex *data, int process)
 		if (data->outfile == -1)
 		{
 			log_error(data->av[4], EXISTENCE);
-			release_resources_and_exit(data, FAILURE);
+			release_resources_and_exit(data, EXIT_FAILURE);
 		}
 	}
 }
@@ -85,6 +85,8 @@ void	open_file(t_pipex *data, int process)
  * For FILES - it closes the open files. */
 void	close_fd(t_pipex *data)
 {
+	if (!data->fd)
+		return ;
 	if (data->fd[0] > -1)
 		close(data->fd[0]);
 	if (data->fd[1] > -1)

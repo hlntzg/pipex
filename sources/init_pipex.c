@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:54:15 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/30 10:58:29 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/01 12:31:11 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ char	**get_path(char **envp)
 {
 	char	**path;
 
+	path = NULL;
 	if (!envp || !*envp)
 	{
 		log_error(NULL, ENVP);
-		return (NULL);
+		return (path);
 	}
 	while (*envp != NULL && ft_strncmp(*envp, "PATH=", 5))
 		envp++;
@@ -46,13 +47,13 @@ static int	*get_pipe_fd(t_pipex *data)
 	if (!pipefd)
 	{
 		log_error("malloc() on get_pipe_fd()", MALLOC);
-		release_resources_and_exit(data, FAILURE);
+		release_resources_and_exit(data, EXIT_FAILURE);
 	}
 	if (pipe(pipefd) == -1)
 	{
 		free(pipefd);
 		log_error(NULL, PIPE);
-		release_resources_and_exit(data, FAILURE);
+		release_resources_and_exit(data, EXIT_FAILURE);
 	}
 	return (pipefd);
 }
@@ -62,5 +63,7 @@ void	initialize_pipex(int argc, char **argv, char **envp, t_pipex *data)
 	data->ac = argc;
 	data->av = argv;
 	data->envp = envp;
+	data->path = get_path(envp);
 	data->fd = get_pipe_fd(data);
+	
 }

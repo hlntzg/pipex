@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:49:42 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/30 13:10:52 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/01 11:59:28 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define CMD_FAIL 0			/* Command failed to execute (not found or invalid) */
 # define CMD_EXEC_ERROR -1		/* Error during command execution (execve failed) */
 
+// general exit codes
 # define SUCCESS 0
 # define FAILURE 1
 
@@ -47,6 +48,7 @@ typedef struct s_pipex
 	int	*fd;
 	int	infile;
 	int	outfile;
+	int	status;
 }	t_pipex;
 
 typedef enum s_error
@@ -68,12 +70,13 @@ typedef enum s_error
 void	log_guide_instructions(void);
 void	log_error(char *str, t_error type);
 void	cmd_errors(t_pipex *data, char *cmd);
+void	close_and_free(t_pipex *data);
 void	release_resources_and_exit(t_pipex *data, int exit_status);
 
 void	access_file(t_pipex *data, char *filename, int process);
 void	open_file(t_pipex *data, int process);
 void	close_fd(t_pipex *data);
-void	close_files(t_pipex *data);
+void	close_file(t_pipex *data);
 
 char	**get_path(char **envp);
 

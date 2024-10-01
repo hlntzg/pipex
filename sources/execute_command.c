@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:04:24 by hutzig            #+#    #+#             */
-/*   Updated: 2024/09/30 14:27:36 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/01 13:35:54 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	execute_command(char *path, char *command, t_pipex *data)
 	char	**cmd_args;
 	char	*abs_path;
 
-	status = CMD_FAIL;
 	cmd_args = ft_split(command, ' ');
 	if (!cmd_args)
 	{
@@ -55,11 +54,18 @@ int	execute_command(char *path, char *command, t_pipex *data)
 	}
 	if (access(abs_path, F_OK) == 0)
 	{
-		if (execve(abs_path, cmd_args, data->envp) == 0)
-			status = CMD_SUCCESS;
-		else if (access(abs_path, X_OK) == -1)
+		if (access(abs_path, X_OK) == -1)
 			status = CMD_EXEC_ERROR;
+		else
+		{
+			if (execve(abs_path, cmd_args, data->envp) == -1)
+				status = CMD_EXEC_ERROR;
+			else
+				status = CMD_SUCCESS;
+		}
 	}
+	else
+		status = CMD_FAIL;
 	free_char_double_pointer(cmd_args);
 	free(abs_path);
 	return (status);
@@ -88,10 +94,10 @@ void	go_to_process(t_pipex *data, char *command)
 
 	if (invalid_cmd_arg(command))
 	{
-		log_error(command, COMMAND); // test 14, 15, 16
-		release_resources_and_exit(data, FAILURE);
+		log_error(command, COMMAND);
+		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
 	}
-	if (command[0] == '/' || command[0] == '.' || ft_strchr(command, '/'))
+	if (ft_strchr(command, '/'))
 		status = execute_command("", command, data);
 	else
 	{
@@ -104,13 +110,50 @@ void	go_to_process(t_pipex *data, char *command)
 			i++;
 		}
 	}
+	//if (ft_strncmp(data->path[0], "", 1) == 0)
+	//{
+	//	log_error("No PATH", EXISTENCE); 
+	//	release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
+	//}
 	if (status == CMD_FAIL || status == CMD_EXEC_ERROR)
 		cmd_errors(data, command);
 }
 
+
 void	cmd_errors(t_pipex *data, char *cmd)
 {
-	if (access(cmd, F_OK) == -1) // check for the existence of the file
+	if (ft_strncmp(data->path[0], "", 1) == 0)
+	{
+		log_error(cmd, EXISTENCE); 
+		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
+	}
+	if (!access(cmd, F_OK) && !access(cmd, X_OK))
+	{
+		if (ft_strchr(cmd, '/'))
+		{
+			log_error(cmd, DIRECTORY);
+			release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
+		}
+		else
+		{
+			log_error(cmd, COMMAND);
+			release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
+		}
+	}
+	if (access(cmd, X_OK) == -1 && *cmd == '/')
+	{
+		log_error(cmd, EXISTENCE);
+		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
+	}
+	if (access(cmd, X_OK) == -1 && !ft_strchr(cmd, '/'))
+	{
+		log_error(cmd, COMMAND);
+		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
+	}
+	log_error(cmd, PERMISSION);
+	release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
+}
+/*	if (access(cmd, F_OK) == -1) // check for the existence of the file
 	{
 		// IS FOLDER (7, 8
 		// INVALID CMD (PATH) (10, 12, 13
@@ -120,38 +163,15 @@ void	cmd_errors(t_pipex *data, char *cmd)
 			release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
 		}
 		// INVALID CMD (9, 11, 13
-		/////// wrong (19) PATH ENVP DOES NOT EXIST 	should be "no such file or directory"
-		/////// wrong (20) NO PATH ENVP, CMD1 (PATH) 	should be "no such file or directory"
+	//////////////// wrong (19) PATH ENVP DOES NOT EXIST 	should be "no such file or directory"
+	//////////////// wrong (20) NO PATH ENVP, CMD1 (PATH) 	should be "no such file or directory"
 		else
 		{
 			log_error("B", COMMAND);
 			release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
 		}
 	}
-	if (access(cmd, X_OK) == -1 && *cmd == '/')
-	{
-		log_error("C", EXISTENCE);
-		release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
-	}
-	if (access(cmd, X_OK) == -1 && ft_strchr(cmd, '/') == NULL)
-	{
-		log_error("D", COMMAND);
-		release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
-	}
-	if (access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0)
-	{
-		if (ft_strchr(cmd, '/'))
-		{
-			log_error("E", DIRECTORY);
-			release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
-		}
-		else
-		{
-			log_error("D", COMMAND);
-			release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
-		}
-	}
 	// NO EXEC PERMISSION (5, 6)
-	log_error("E", PERMISSION);
+	log_error("LAST", PERMISSION);
 	release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
-}
+}*/
