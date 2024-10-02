@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:04:24 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/02 14:43:49 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/02 15:17:05 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,13 +127,6 @@ void	go_to_process(t_pipex *data, char *command)
  * is reached, so it doesnt have execution permitions and gets exit code 126.*/
 void	cmd_errors(t_pipex *data, char *cmd)
 {
-//	if (!data->envp)
-//		release_resources_and_exit(data, EXIT_FAILURE);
-/*	if ((ft_strncmp(data->path[0], "", 1) == 0))
-	{		
-		log_error(cmd, EXISTENCE);
-		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
-	}*/
 	if (data->path == NULL)
 	{
 		log_error(cmd, EXISTENCE);
@@ -157,16 +150,20 @@ void	cmd_errors(t_pipex *data, char *cmd)
 		log_error(cmd, DIRECTORY);
 		release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
 	}
+	else if (access(cmd, X_OK) == 0 && !ft_strchr(cmd, '/'))
+	{
+		log_error(cmd, COMMAND);
+		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
+	}
 	log_error(cmd, PERMISSION);
 	release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
 }
-/*{
-	if ((ft_strncmp(data->path[0], "", 1) == 0) || (access(cmd, F_OK) == -1 && ft_strchr(cmd, '/')))
+/*	if ((ft_strncmp(data->path[0], "", 1) == 0) || (access(cmd, F_OK) == -1 && ft_strchr(cmd, '/')))
 	{
 		log_error(cmd, EXISTENCE); 
 		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
-	}
-	if (access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0)
+	}*/
+/*	if (access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0)
 	{
 		if (ft_strchr(cmd, '/'))
 		{

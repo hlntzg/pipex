@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:54:15 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/02 14:14:41 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/02 15:02:23 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,12 @@ char	**get_path(char **envp)
 
 	path = NULL;
 	if (!envp || !*envp)
-	{
-		//log_error(NULL, ENVP);
-		//exit (127);
 		return (NULL);
-	}
 	while (*envp != NULL && ft_strncmp(*envp, "PATH=", 5))
 		envp++;
 	if (*envp == NULL)
 		return (NULL);
 	else
-	//if (!(*envp))
-	//{
-//		log_error(NULL, PATH);
-	//	path = ft_split("", 0);
-	//}
-	//else
-	//	path = ft_split((*envp) + 5, ':');
 		path = ft_split((*envp) + 5, ':');
 	if (!path)
 	{
