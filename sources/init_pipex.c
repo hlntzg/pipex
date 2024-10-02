@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:54:15 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/02 12:37:16 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/02 14:14:41 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,22 @@ char	**get_path(char **envp)
 	path = NULL;
 	if (!envp || !*envp)
 	{
-		log_error(NULL, ENVP);
-		exit (127);
-		//return (NULL);
+		//log_error(NULL, ENVP);
+		//exit (127);
+		return (NULL);
 	}
 	while (*envp != NULL && ft_strncmp(*envp, "PATH=", 5))
 		envp++;
-	if (!(*envp))
-	{
-//		log_error(NULL, PATH);
-		path = ft_split("", 0);
-	}
+	if (*envp == NULL)
+		return (NULL);
 	else
+	//if (!(*envp))
+	//{
+//		log_error(NULL, PATH);
+	//	path = ft_split("", 0);
+	//}
+	//else
+	//	path = ft_split((*envp) + 5, ':');
 		path = ft_split((*envp) + 5, ':');
 	if (!path)
 	{
@@ -67,4 +71,6 @@ void	initialize_pipex(int argc, char **argv, char **envp, t_pipex *data)
 	data->envp = envp;
 	data->path = get_path(envp);
 	data->fd = get_pipe_fd(data);
+	if (data->envp == NULL)
+		release_resources_and_exit(data, EXIT_FAILURE);
 }

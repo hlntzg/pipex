@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:04:24 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/02 09:44:44 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/02 14:43:49 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	execute_command(char *path, char *command, t_pipex *data)
 	char	**args;
 	char	*abs_path;
 
-	status = CMD_FAIL;
 	args = ft_split(command, ' ');
 	if (!args)
 	{
@@ -93,6 +92,7 @@ void	go_to_process(t_pipex *data, char *command)
 	int	status;
 	int	i;
 
+	status = CMD_FAIL;
 	if (invalid_cmd_arg(command))
 	{
 		log_error(command, COMMAND);
@@ -100,7 +100,12 @@ void	go_to_process(t_pipex *data, char *command)
 	}
 	if (ft_strchr(command, '/'))
 		status = execute_command("", command, data);
-	else
+/*	if (data->path == NULL && access(command, X_OK) == 0)
+	{
+		log_error(command, EXISTENCE);
+		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
+	}*/
+	else if (data->path != NULL)
 	{
 		i = 0;
 		while (data->path && data->path[i])
@@ -122,8 +127,15 @@ void	go_to_process(t_pipex *data, char *command)
  * is reached, so it doesnt have execution permitions and gets exit code 126.*/
 void	cmd_errors(t_pipex *data, char *cmd)
 {
-	if ((ft_strncmp(data->path[0], "", 1) == 0))
+//	if (!data->envp)
+//		release_resources_and_exit(data, EXIT_FAILURE);
+/*	if ((ft_strncmp(data->path[0], "", 1) == 0))
 	{		
+		log_error(cmd, EXISTENCE);
+		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
+	}*/
+	if (data->path == NULL)
+	{
 		log_error(cmd, EXISTENCE);
 		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
 	}
