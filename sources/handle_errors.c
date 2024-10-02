@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:55:41 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/01 16:50:44 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/02 12:40:37 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	log_guide_instructions(void)
 		"\n\t./pipex <file1> <cmd1> <cmd2> <file2>\n"
 		"\n\tfile1, file2\t: file names, infile and outfile;"
 		"\n\tcmd1, cmd2\t: shell commands with respective parameters;"
-		"\n", STDOUT);
+		"\n", STDERR);
 }
 
 void	log_error(char *str, t_error type)
@@ -53,14 +53,14 @@ void	log_error(char *str, t_error type)
 void	release_resources_and_exit(t_pipex *data, int code)
 {
 	close_fd(data);
-	close_file(data);
+	//close_file(data);
 	free_char_double_pointer(data->path);
 	exit(code);
 }
 
 void	close_and_free(t_pipex *data)
 {
-	close_file(data);
+	//close_file(data);
 	close_fd(data);
 	free_char_double_pointer(data->path);
 }

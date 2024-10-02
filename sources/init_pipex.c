@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:54:15 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/01 16:53:32 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/02 12:37:16 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ char	**get_path(char **envp)
 	if (!envp || !*envp)
 	{
 		log_error(NULL, ENVP);
-		return (path);
+		exit (127);
+		//return (NULL);
 	}
 	while (*envp != NULL && ft_strncmp(*envp, "PATH=", 5))
 		envp++;
 	if (!(*envp))
 	{
-		log_error(NULL, PATH);
+//		log_error(NULL, PATH);
 		path = ft_split("", 0);
 	}
 	else
@@ -43,6 +44,7 @@ static int	*get_pipe_fd(t_pipex *data)
 {
 	int	*pipefd;
 
+	pipefd = NULL;
 	pipefd = (int *)malloc(sizeof(int) * 2);
 	if (!pipefd)
 	{

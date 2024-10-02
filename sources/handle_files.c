@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:39:33 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/01 17:04:35 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/02 11:46:58 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ void	close_fd(t_pipex *data)
 {
 	if (!data->fd)
 		return ;
-	if (data->fd[0] > -1)
+	if (data->fd[0] > 0)
 		close(data->fd[0]);
-	if (data->fd[1] > -1)
+	if (data->fd[1] > 0)
 		close(data->fd[1]);
 	free(data->fd);
 	data->fd = NULL;
@@ -81,8 +81,8 @@ void	close_fd(t_pipex *data)
 
 void	close_file(t_pipex *data)
 {
-	if (data->infile > -1)
+	if (data->infile > 0)
 		close(data->infile);
-	if (data->outfile > -1)
+	if (data->outfile > 0)
 		close(data->outfile);
 }
