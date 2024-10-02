@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:49:42 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/01 17:26:09 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/02 16:04:38 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	access_file(t_pipex *data, char *filename, int process);
 void	open_file(t_pipex *data, int process);
 void	close_fd(t_pipex *data);
 void	close_file(t_pipex *data);
+
+void	exit_failure(t_pipex *data, char *str, t_error type, int code);
 
 void	initialize_pipex(int argc, char **argv, char **envp, t_pipex *data);
 int		pipex(t_pipex *data);

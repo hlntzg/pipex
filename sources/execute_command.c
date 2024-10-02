@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:04:24 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/02 15:17:05 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/02 16:20:29 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,18 @@ int	execute_command(char *path, char *command, t_pipex *data)
 
 	args = ft_split(command, ' ');
 	if (!args)
-	{
-		log_error("ft_split() on execute_command()", MALLOC);
-		release_resources_and_exit(data, EXIT_FAILURE);
-	}
+		exit_failure(data, "ft_split() on execute_command()", MALLOC, EXIT_FAILURE);
+//	{
+//		log_error("ft_split() on execute_command()", MALLOC);
+//		release_resources_and_exit(data, EXIT_FAILURE);
+//	}
 	abs_path = get_abs_path(path, args[0]);
 	if (!abs_path)
-	{
-		log_error("malloc() on get_abs_path()", MALLOC);
-		release_resources_and_exit(data, EXIT_FAILURE);
-	}
+		exit_failure(data, "ft_split() on get_abs_path()", MALLOC, EXIT_FAILURE);
+//	{
+//		log_error("malloc() on get_abs_path()", MALLOC);
+//		release_resources_and_exit(data, EXIT_FAILURE);
+//	}
 	if (access(abs_path, F_OK) == 0)
 	{
 		if (access(abs_path, X_OK) == -1)
@@ -94,10 +96,11 @@ void	go_to_process(t_pipex *data, char *command)
 
 	status = CMD_FAIL;
 	if (invalid_cmd_arg(command))
-	{
-		log_error(command, COMMAND);
-		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
-	}
+		exit_failure(data, command, COMMAND, EXIT_CMD_NOT_FOUND);
+//	{
+//		log_error(command, COMMAND);
+//		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
+//	}
 	if (ft_strchr(command, '/'))
 		status = execute_command("", command, data);
 /*	if (data->path == NULL && access(command, X_OK) == 0)
@@ -128,64 +131,39 @@ void	go_to_process(t_pipex *data, char *command)
 void	cmd_errors(t_pipex *data, char *cmd)
 {
 	if (data->path == NULL)
-	{
-		log_error(cmd, EXISTENCE);
-		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
-	}
+		exit_failure(data, cmd, EXISTENCE, EXIT_CMD_NOT_FOUND);
+//	{
+//		log_error(cmd, EXISTENCE);
+//		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
+//	}
 	if (access(cmd, F_OK) == -1)
 	{
 		if (ft_strchr(cmd, '/'))
-		{
-			log_error(cmd, EXISTENCE);
-			release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
-		}
+			exit_failure(data, cmd, EXISTENCE, EXIT_CMD_NOT_FOUND);
+//		{
+//			log_error(cmd, EXISTENCE);
+//			release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
+//		}
 		else
-		{
-			log_error(cmd, COMMAND);
-			release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
-		}
+			exit_failure(data, cmd, COMMAND, EXIT_CMD_NOT_FOUND);
+//		{
+//			log_error(cmd, COMMAND);
+//			release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
+//		}
 	}
 	if (access(cmd, X_OK) == 0 && ft_strchr(cmd, '/'))
-	{
-		log_error(cmd, DIRECTORY);
-		release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
-	}
+		exit_failure(data, cmd, DIRECTORY, EXIT_CMD_NOT_EXECUTABLE);
+//	{
+//		log_error(cmd, DIRECTORY);
+//		release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
+//	}
 	else if (access(cmd, X_OK) == 0 && !ft_strchr(cmd, '/'))
-	{
-		log_error(cmd, COMMAND);
-		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
-	}
-	log_error(cmd, PERMISSION);
-	release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
+		exit_failure(data, cmd,COMMAND, EXIT_CMD_NOT_FOUND);
+//	{
+//		log_error(cmd, COMMAND);
+//		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
+//	}
+//	log_error(cmd, PERMISSION);
+//	release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
+	exit_failure(data, cmd, PERMISSION, EXIT_CMD_NOT_EXECUTABLE);
 }
-/*	if ((ft_strncmp(data->path[0], "", 1) == 0) || (access(cmd, F_OK) == -1 && ft_strchr(cmd, '/')))
-	{
-		log_error(cmd, EXISTENCE); 
-		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
-	}*/
-/*	if (access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0)
-	{
-		if (ft_strchr(cmd, '/'))
-		{
-			log_error(cmd, DIRECTORY);
-			release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
-		}
-		else
-		{
-			log_error(cmd, COMMAND);
-			release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
-		}
-	}
-	if (access(cmd, X_OK) == -1 && *cmd == '/')
-	{
-		log_error(cmd, EXISTENCE);
-		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
-	}
-	if (access(cmd, X_OK) == -1 && !ft_strchr(cmd, '/'))
-	{
-		log_error(cmd, COMMAND);
-		release_resources_and_exit(data, EXIT_CMD_NOT_FOUND);
-	}
-	log_error(cmd, PERMISSION);
-	release_resources_and_exit(data, EXIT_CMD_NOT_EXECUTABLE);
-}*/

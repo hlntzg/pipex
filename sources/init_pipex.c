@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:54:15 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/02 15:02:23 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/02 16:08:53 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,17 @@ static int	*get_pipe_fd(t_pipex *data)
 	pipefd = NULL;
 	pipefd = (int *)malloc(sizeof(int) * 2);
 	if (!pipefd)
-	{
-		log_error("malloc() on get_pipe_fd()", MALLOC);
-		release_resources_and_exit(data, EXIT_FAILURE);
-	}
+		exit_failure(data, "malloc() on get_pipe_fd()", MALLOC, EXIT_FAILURE);
+//	{
+//		log_error("malloc() on get_pipe_fd()", MALLOC);
+//		release_resources_and_exit(data, EXIT_FAILURE);
+//	}
 	if (pipe(pipefd) == -1)
 	{
 		free(pipefd);
-		log_error(NULL, PIPE);
-		release_resources_and_exit(data, EXIT_FAILURE);
+		exit_failure(data, NULL, PIPE, EXIT_FAILURE);
+//		log_error(NULL, PIPE);
+//		release_resources_and_exit(data, EXIT_FAILURE);
 	}
 	return (pipefd);
 }
@@ -61,5 +63,6 @@ void	initialize_pipex(int argc, char **argv, char **envp, t_pipex *data)
 	data->path = get_path(envp);
 	data->fd = get_pipe_fd(data);
 	if (data->envp == NULL)
-		release_resources_and_exit(data, EXIT_FAILURE);
+//		release_resources_and_exit(data, EXIT_FAILURE);
+		exit_failure(data, NULL, 0, EXIT_FAILURE);
 }
