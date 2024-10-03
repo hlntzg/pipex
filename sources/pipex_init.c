@@ -6,13 +6,22 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:54:15 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/03 11:52:55 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/03 15:23:11 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	**get_path(char **envp)
+/**
+ * get_path - Retrieves the system PATH environment variable.
+ * @envp: Array of environment variables passed to the program.
+ *
+ * This function searches for the "PATH" variable in the environment
+ * variables and splits its value into an array of directory paths.
+ * It returns an array of strings representing directories in PATH,
+ * or NULL if an error occurs or if PATH is not found.
+ */
+static char	**get_path(char **envp)
 {
 	char	**path;
 
@@ -31,8 +40,19 @@ char	**get_path(char **envp)
 		return (NULL);
 	}
 	return (path);
-}	
+}
 
+/**
+ * get_pipe_fd - Allocates memory for pipe file descriptors and creates a pipe.
+ * @data: Pointer to t_pipex structure containing program data.
+ *
+ * This function allocates memory for two file descriptors (read and write ends)
+ * and creates a pipe. If allocation or pipe creation fails, it handles errors 
+ * appropriately by logging and exiting.
+ *
+ * Return: Pointer to an array containing read and write ends of the pipe,
+ *         or exits on failure.
+ */
 static int	*get_pipe_fd(t_pipex *data)
 {
 	int	*pipefd;
@@ -56,6 +76,4 @@ void	initialize_pipex(int argc, char **argv, char **envp, t_pipex *data)
 	data->envp = envp;
 	data->path = get_path(envp);
 	data->fd = get_pipe_fd(data);
-	if (data->envp == NULL)
-		exit_failure(data, NULL, 0, EXIT_FAILURE);
 }
