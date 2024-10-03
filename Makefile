@@ -6,7 +6,7 @@
 #    By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/10 09:28:27 by hutzig            #+#    #+#              #
-#    Updated: 2024/09/25 16:49:09 by hutzig           ###   ########.fr        #
+#    Updated: 2024/10/03 12:23:46 by hutzig           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,10 @@ RM = rm -rf
 
 SOURCES = main.c \
 	pipex.c \
-	init_pipex.c \
-	handle_errors.c \
-	handle_files.c \
+	pipex_init.c \
+	file_management.c \
 	execute_command.c \
+	exit_and_error.c \
 
 SRC = $(addprefix $(DIR_SRC)/,$(SOURCES))
 
