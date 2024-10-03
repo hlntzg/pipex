@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:49:42 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/02 16:04:38 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/03 09:40:40 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 # include "../lib/libft/libft.h"	/* libft library */
 # include <unistd.h>			/* fork, pipe, r/w file, close, dup2, execve */
-# include <string.h>			/* sterror */
 # include <sys/wait.h>			/* waitpid, wait */
-# include <errno.h>			/* errno */
 # include <fcntl.h>			/* open */
 # include <sys/types.h>			/* pid_t data type */
-# include <stdio.h>			/* perror */
+//# include <stdio.h>			/* perror */
+//# include <string.h>			/* sterror */
+//# include <errno.h>			/* errno */
 
 # define STDIN 0
 # define STDOUT 1
@@ -50,17 +50,16 @@ typedef struct s_pipex
 typedef enum s_error
 {
 	ARGUMENTS,
-	ENVP,
-	PATH,
+//	ENVP,
+//	PATH,
 	MALLOC,
+	PIPE,
+	FORK,
+	DUP2,
 	EXISTENCE,
 	PERMISSION,	
 	COMMAND,
 	DIRECTORY,
-	PIPE,
-	FORK,
-	DUP2,
-	READF,
 }	t_error;
 
 void	log_guide_instructions(void);
