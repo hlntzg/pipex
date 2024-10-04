@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:04:24 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/03 15:22:44 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/04 13:34:37 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
  *
  * Return: A pointer to the absolute path string, or NULL on failure.
  */
-static char	*get_abs_path(char *path, char *cmd)
+static char	*get_abs_path(const char *path, const char *cmd)
 {
 	char	*abs_path;
-	char	len_path;
-	char	len_cmd;
+	size_t	len_path;
+	size_t	len_cmd;
 
 	if (*path == '\0')
 		return (ft_strdup(cmd));
