@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:55:41 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/03 15:04:04 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/04 11:52:00 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	cmd_error_handling(t_pipex *data, char *cmd)
  */
 void	log_guide_instructions(void)
 {
-	ft_putstr_fd("\nguide for execute the program:"
+	ft_putstr_fd("\nGuide for execute the program:"
 		"\n\t./pipex <file1> <cmd1> <cmd2> <file2>\n"
 		"\n\tfile1, file2\t: file names, infile and outfile;"
 		"\n\tcmd1, cmd2\t: shell commands with respective parameters;"

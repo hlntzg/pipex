@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:17:04 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/03 14:49:52 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/04 11:50:58 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 5)
 	{
-		log_guide_instructions();
 		log_error("Error", ARGUMENTS);
+		log_guide_instructions();
 		return (EXIT_FAILURE);
 	}
 	initialize_pipex(argc, argv, envp, &data);
