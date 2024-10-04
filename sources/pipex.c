@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:39:02 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/03 14:17:49 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/04 13:51:00 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * child_process - Prepares the child process for execution by opening files,
- *                 duplicating file descriptors, and closing unnecessary ones.
+ * duplicating file descriptors, and closing unnecessary ones.
  * @data: Pointer to the t_pipex structure containing program data.
  * @process: Indicates whether this is the first (0) or second (1) child process.
  *

@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:54:15 by hutzig            #+#    #+#             */
-/*   Updated: 2024/10/03 15:23:11 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/10/04 13:52:03 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
  *
  * This function searches for the "PATH" variable in the environment
  * variables and splits its value into an array of directory paths.
- * It returns an array of strings representing directories in PATH,
+ * 
+ * Return: Array of strings representing directories in PATH,
  * or NULL if an error occurs or if PATH is not found.
  */
 static char	**get_path(char **envp)
@@ -51,7 +52,7 @@ static char	**get_path(char **envp)
  * appropriately by logging and exiting.
  *
  * Return: Pointer to an array containing read and write ends of the pipe,
- *         or exits on failure.
+ * or exits on failure.
  */
 static int	*get_pipe_fd(t_pipex *data)
 {
